@@ -1,17 +1,33 @@
 # 2019-NeurIPS
 anonymous supplementary material
 
+## Experimental setup
+ In this paper, we have compared our method with three image-to-image translation models ([CycleGAN](), [MUNIT]() and [DRIT]()), and also two image steganography methods ([Steganography]() and [HiDDeN]()). Please note that all their methods belong to `symmetric image steganography (encryption)` methods, only our method could perform `asymmetric image steganography (encryption)`.
+ 
+ For all the experiments, we all use facial images and flower images as cover images, and regard images from SVHN dataset and more complex images from Cat2dog dataset. For the flower images, we randomly use seven different kinds of flowers from [102flowers](http://www.robots.ox.ac.uk/~vgg/data/flowers/102/).
+ And there are 878 (704 for training and 174 for testing) flower images in total, in order to balance the training dataset between two domains, we randomly select 695 facial images from [CelebA](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html). In order to evaluate the model, we randomly select 5000 facial images from CelebA for our method. 
+ 
+ As for the secret information image (simple number information and complex information images),
+ we randomly select 1000 number images for the training stage. To obtain quantitative comparison, we could randomly paste the remaining number image to the testing cover images at different positions. Consider there are infinite combinations to get different composite images, We just randomly paste one unseen number image to testing cover images at center location to get composite images at testing stage. Please note we compute all the quantitative results of above mentioned methods through `same testing composite images`.
+  For the complex information images, we inherit the Cat2dog from [DRIT](), we follow their division (771 training and 100 testing images for cat, 1264 training and 100 testing images for dog). Following the same operation to obtain testing composite images, Please note that we compute the quantitative results of all the above mentioned methods through `same testing composite images`.
+ 
+ For the training of image-to-image translation models, we randomly pick up one secret message image from the training message images at 50% chance. If yes, we randomly paste the secret image to cover image at different position, then we regard the composite as the final input of generators. If not, we just use the raw cover image as input image. Please note all the real samples for discriminator are the raw input images, we don't paste the message image to them.
+ 
+ For the training of the image steganography methods: Steganography and HiDDeN. For Steganography, we follow the instructions of https://github.com/harveyslash/Deep-Steganography. For HiDDeN, we follow the instructions of https://github.com/ando-khachatryan/HiDDeN. For fair comparison, here we use the same above mentioned training images and testing images. 
+
+## Training details
+In order to make our model robust and generative, we just paste the message image to input image at 50% chance during the training stage, this operation could force model to concentrate on the local message information.   
+### Losses
+#### Local loss
+In order to reconstruct clearer message image, we design a local loss to compute the pixel-wise loss between the local regions to paste the message image.
+#### Information loss
+In order to guarantee that we can only reconstruct required message using true private key. So we don't compute the cycle-consistency loss.
+
+### Hyper 
+
 ## Complex information encryption
-### Qualitative comparison 
-<style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-.tg .tg-uca5{text-decoration:underline;text-align:left;vertical-align:top}
-.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
-.tg .tg-0lax{text-align:left;vertical-align:top}
-.tg .tg-uog8{text-decoration:underline;border-color:inherit;text-align:left;vertical-align:top}
-</style>
+### Qualitative comparison of complex information encryption of using size `64*64`
+
 <table class="tg">
   <tr>
     <th class="tg-0pky">Methods</th>
@@ -76,13 +92,7 @@ anonymous supplementary material
 </table>
 
 
-<style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
-.tg .tg-uog8{text-decoration:underline;border-color:inherit;text-align:left;vertical-align:top}
-</style>
+### Qualitative comparison of complex information encryption of using size `128*128`
 <table class="tg">
   <tr>
     <th class="tg-0pky">Methods</th>
@@ -145,3 +155,10 @@ anonymous supplementary material
     <td class="tg-uog8">0.2854</td>
   </tr>
 </table>
+
+## More results
+
+### Different positions
+
+
+### Different positions
