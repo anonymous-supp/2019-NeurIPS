@@ -23,7 +23,15 @@ In order to reconstruct clearer message image, we design a local loss to compute
 #### Information loss
 In order to guarantee that we can only reconstruct required message using true private key. So we don't compute the cycle-consistency loss.
 
-### Hyper 
+### Key generator function K
+Here we use a CNN architecture with 7 layers (6 Conv-Instance-LeakyReLU modules and 1 fc layer) to distribute paired public and private keys. For public keys, we regard the cover image and the disentangled representation (public disguise) of one random image from another domain as public key, while we regard the disentangled representation of the the same cover image as paired private key.
+So the CNN architecture provides an implicit coupling relationship between public key and private key. We optimize the key generator with classification loss and hope to obtain the disentangled representation of different layers.
+
+### Mapping function F and G
+We optimized the F and G together by the final objective function.     
+
+### Hyper-parameter
+The final objective function 
 
 ## Complex information encryption
 ### Qualitative comparison of complex information encryption of using size `64*64`
@@ -158,7 +166,6 @@ In order to guarantee that we can only reconstruct required message using true p
 
 ## More results
 
-### Different positions
+### Different positions (`64*64`)
 
-
-### Different positions
+### Different positions (`128*128`)
